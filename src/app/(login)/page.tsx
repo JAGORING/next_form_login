@@ -13,18 +13,34 @@ export default function Login() {
         <p className="text-sm text-center text-[#8a6a6a] mb-8">Log in and continue your journey 🚀</p>
 
         <form action={action} className="space-y-5">
-          <InputField name="email" label="Email" type="email" placeholder="Enter your email" />
-          <InputField name="username" label="Username" type="text" placeholder="Enter your username" />
+          <InputField
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+            error={state?.error?.email ?? ''}
+          />
+          <InputField
+            name="username"
+            label="Username"
+            type="text"
+            placeholder="Enter your username"
+            error={state?.error?.userName ?? ''}
+          />
           <InputField
             name="password"
             label="Password"
             type="password"
             placeholder="Enter your password"
-            error={state?.error.password ?? ''}
+            error={state?.error?.password ?? ''}
           />
           <FormButton text="Log in" />
         </form>
-        <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">{'asdsa'}</div>
+        {state?.success && (
+          <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
+            🌿 You’re in. Time to relax and enjoy!
+          </div>
+        )}
       </div>
     </div>
   );
