@@ -1,13 +1,16 @@
 'use server';
+import { MIN_LENGTH_PASSWORD, MIN_LENGTH_USERNAME } from '@/constants';
 import { z } from 'zod';
+
+const hasLeastOneNum = (val: string) => /\d/.test(val);
 
 const loginUserSchema = z.object({
   email: z.string().email().endsWith('@zod.com', '🚫 Must end with @zod.com.'),
-  username: z.string().min(5, '🚫 At least 5 characters.'),
+  username: z.string().min(MIN_LENGTH_USERNAME, '🚫 At least 5 characters.'),
   password: z
     .string()
-    .min(10, "🚫 At least 10 characters. Let's make it stronger!")
-    .regex(/^(?=.*?[0-9])$/, { message: 'dsadsad' }),
+    .min(MIN_LENGTH_PASSWORD, "🚫 At least 10 characters. Let's make it stronger!")
+    .refine(hasLeastOneNum, '🚫 Must include at least one number.'),
 });
 
 export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
@@ -20,8 +23,9 @@ export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
   // loginUserSchema.parse(data);
   const result = loginUserSchema.safeParse(data);
   if (!result.success) {
-    console.log('result :: ', result.error.flatten());
-    return result.error.flatten();
+    return { success: false, errors: result.error.flatten() };
+  } else {
+    return { success: true };
   }
   //
 };
