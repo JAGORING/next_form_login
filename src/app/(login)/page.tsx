@@ -1,6 +1,6 @@
 'use client';
 import { useFormState } from 'react-dom';
-import InputField from '../components/InputField';
+import Input from '../components/Input';
 import FormButton from '../components/FormButton';
 import { handleSubmitForm } from './action';
 
@@ -13,21 +13,21 @@ export default function Login() {
         <p className="text-sm text-center text-[#8a6a6a] mb-8">Log in and continue your journey 🚀</p>
 
         <form action={action} className="space-y-5">
-          <InputField
+          <Input
             name="email"
             label="Email"
             type="email"
             placeholder="Enter your email"
             errors={state?.fieldErrors.email}
           />
-          <InputField
+          <Input
             name="username"
             label="Username"
             type="text"
             placeholder="Enter your username"
             errors={state?.fieldErrors.username}
           />
-          <InputField
+          <Input
             name="password"
             label="Password"
             type="password"
