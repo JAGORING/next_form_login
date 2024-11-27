@@ -18,29 +18,29 @@ export default function Login() {
             label="Email"
             type="email"
             placeholder="Enter your email"
-            error={state?.error?.email ?? ''}
+            errors={state?.fieldErrors.email}
           />
           <InputField
             name="username"
             label="Username"
             type="text"
             placeholder="Enter your username"
-            error={state?.error?.userName ?? ''}
+            errors={state?.fieldErrors.username}
           />
           <InputField
             name="password"
             label="Password"
             type="password"
             placeholder="Enter your password"
-            error={state?.error?.password ?? ''}
+            errors={state?.fieldErrors.password}
           />
           <FormButton text="Log in" />
         </form>
-        {state?.success && (
+        {/* {state?.success && (
           <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
             🌿 You’re in. Time to relax and enjoy!
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

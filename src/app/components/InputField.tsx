@@ -5,10 +5,10 @@ interface InputFieldProps {
   label: string;
   type: string;
   placeholder: string;
-  error?: string;
+  errors?: string[];
 }
 
-const InputField: React.FC<InputFieldProps> = ({ name, label, type, placeholder, error }) => {
+const InputField: React.FC<InputFieldProps> = ({ name, label, type, placeholder, errors }) => {
   return (
     <div>
       <label htmlFor={name} className="block text-sm font-medium text-[#8a6a6a]">
@@ -21,7 +21,7 @@ const InputField: React.FC<InputFieldProps> = ({ name, label, type, placeholder,
         placeholder={placeholder}
         className="w-full mt-1 px-4 py-2 bg-[#fdfcf9] border border-[#d3c9c3] rounded-lg focus:ring-2 focus:ring-[#9b8c85] focus:outline-none"
       />
-      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+      {errors && errors.map((err) => <p className="mt-1 text-xs text-red-600">{err}</p>)}
     </div>
   );
 };
