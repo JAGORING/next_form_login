@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
 import { useFormState } from 'react-dom';
-import { handleSubmitForm } from './action';
 import Input from '../components/Input';
 import FormButton from '../components/FormButton';
+import { handleSubmitForm } from './action';
+import Link from 'next/link';
 
 export default function CreateAccount() {
   const [state, action] = useFormState(handleSubmitForm, null);
@@ -36,19 +37,26 @@ export default function CreateAccount() {
             placeholder="Enter your password"
             errors={state?.errors?.fieldErrors.password}
           />
-          {/* <Input
-            name="confirmPassword"
+          <Input
+            name="confirm-password"
             label="Confirm Password"
             type="password"
             placeholder="Confirm your password"
             errors={state?.errors?.fieldErrors.confirmPassword}
-          /> */}
+          />
           <FormButton text="Create Account" />
         </form>
         {state?.success && (
-          <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
-            🌿 Account created! Welcome aboard!
-          </div>
+          <>
+            <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
+              🌿 Account created! Welcome aboard!
+              <div className="mt-2 text-center">
+                <Link href="/" className="text-[#6b4f4f] text-sm hover:underline font-semibold">
+                  Go to Log in
+                </Link>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>
