@@ -5,7 +5,7 @@ import { z } from 'zod';
 const hasLeastOneNum = (val: string) => /\d/.test(val);
 
 const loginUserSchema = z.object({
-  email: z.string().email().endsWith('@zod.com', '🚫 Must end with @zod.com.'),
+  email: z.string().email(),
   username: z.string().min(MIN_LENGTH_USERNAME, '🚫 At least 5 characters.'),
   password: z
     .string()
@@ -20,7 +20,6 @@ export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
     username: formData.get('username'),
     password: formData.get('password'),
   };
-  // loginUserSchema.parse(data);
   const result = loginUserSchema.safeParse(data);
   if (!result.success) {
     return { success: false, errors: result.error.flatten() };
