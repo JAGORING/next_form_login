@@ -3,9 +3,8 @@ import { MIN_LENGTH_PASSWORD, MIN_LENGTH_USERNAME } from '@/constants';
 import db from '@/lib/db';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
-import { getIronSession } from 'iron-session';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { getSession } from '@/lib/session';
 
 const hasLeastOneNum = (val: string) => /\d/.test(val);
 
@@ -75,13 +74,10 @@ export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
       select: { id: true },
     });
 
-    const cookie = await getIronSession(cookies(), {
-      cookieName: 'user-info',
-      password: process.env.COOKIE_PASSWORD!,
-    });
+    const session = await getSession();
 
-    cookie.id = user.id;
-    await cookie.save();
+    session.id = user.id;
+    await session.save();
     redirect('/user-profile');
   }
 };
