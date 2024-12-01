@@ -1,12 +1,30 @@
-import React from 'react';
+import db from '@/lib/db';
+import { getSession } from '@/lib/session';
+import { formatDate } from '@/utils/date';
+import { notFound, redirect } from 'next/navigation';
 
-export default function UserProfile() {
-  const user = {
-    email: 'johndoe@example.com',
-    username: 'johndoe',
-    joinedDate: '2023-01-15',
+const getUser = async () => {
+  const session = await getSession();
+  if (session.id) {
+    const user = await db.user.findUnique({
+      where: { id: session.id },
+    });
+    if (user) {
+      return user;
+    }
+  }
+  notFound();
+};
+
+export default async function UserProfile() {
+  const user = await getUser();
+  const handleLogout = async () => {
+    'use server';
+    const session = await getSession();
+    await session.destroy();
+
+    redirect('/');
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
@@ -15,21 +33,22 @@ export default function UserProfile() {
 
         <div className="space-y-4">
           <div className="text-[#6b4f4f]">
-            <strong>Email:</strong> <span className="ml-2">{user.email}</span>
+            <strong>Email:</strong> <span className="ml-2">{user?.email}</span>
           </div>
           <div className="text-[#6b4f4f]">
-            <strong>Username:</strong> <span className="ml-2">{user.username}</span>
+            <strong>Username:</strong> <span className="ml-2">{user?.username}</span>
           </div>
-          <div className="text-[#6b4f4f]">
-            <strong>Joined Date:</strong> <span className="ml-2">{user.joinedDate}</span>
-          </div>
+          {user?.created_at && (
+            <div className="text-[#6b4f4f]">
+              <strong>Joined Date:</strong> <span className="ml-2">{formatDate(user?.created_at)}</span>
+            </div>
+          )}
         </div>
-
-        {/* <div className="mt-8 text-center">
-          <button className="px-4 py-2 text-white bg-[#6b4f4f] rounded-lg hover:bg-[#8a6a6a] focus:outline-none">
-            Edit Profile
+        <form action={handleLogout}>
+          <button className="w-full mt-8 py-2 px-4 bg-[#6b4f4f] text-white font-medium text-sm rounded-md shadow hover:bg-[#593d3d] transition">
+            로그아웃
           </button>
-        </div> */}
+        </form>
       </div>
     </div>
   );
