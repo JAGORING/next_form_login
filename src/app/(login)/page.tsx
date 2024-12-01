@@ -3,6 +3,7 @@ import { useFormState } from 'react-dom';
 import Input from '../components/Input';
 import FormButton from '../components/FormButton';
 import { handleSubmitForm } from './action';
+import Link from 'next/link';
 
 export default function Login() {
   const [state, action] = useFormState(handleSubmitForm, null);
@@ -41,6 +42,12 @@ export default function Login() {
             🌿 You’re in. Time to relax and enjoy!
           </div>
         )}
+        <div className="mt-6 text-center">
+          <p className="text-sm text-[#8a6a6a]">Don't have an account?</p>
+          <Link href="/create-account" className="text-[#6b4f4f] hover:underline font-semibold">
+            Create Account
+          </Link>
+        </div>
       </div>
     </div>
   );
