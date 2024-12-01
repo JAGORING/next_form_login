@@ -1,15 +1,32 @@
 'use server';
-import { MIN_LENGTH_PASSWORD, MIN_LENGTH_USERNAME } from '@/constants';
+import { MIN_LENGTH_PASSWORD } from '@/constants';
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
+import db from '@/lib/db';
+import { redirect } from 'next/navigation';
+import { getSession } from '@/lib/session';
 
 const hasLeastOneNum = (val: string) => /\d/.test(val);
 
+const checkEmailExist = async (email: string) => {
+  const user = await db.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+    },
+  });
+
+  return user ? true : false;
+};
+
 const loginUserSchema = z.object({
-  email: z.string().email(),
-  username: z.string().min(MIN_LENGTH_USERNAME, '🚫 At least 5 characters.'),
+  email: z
+    .string()
+    .email()
+    .refine(checkEmailExist, '🚫 This email is not registered. Please check your email or sign up.'),
   password: z
     .string()
-    .min(MIN_LENGTH_PASSWORD, "🚫 At least 10 characters. Let's make it stronger!")
+    .min(MIN_LENGTH_PASSWORD, '🚫 At least 10 characters.')
     .refine(hasLeastOneNum, '🚫 Must include at least one number.'),
 });
 
@@ -17,43 +34,35 @@ export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
   await new Promise((res) => setTimeout(res, 1000));
   const data = {
     email: formData.get('email'),
-    username: formData.get('username'),
     password: formData.get('password'),
   };
-  const result = loginUserSchema.safeParse(data);
+  const result = await loginUserSchema.safeParseAsync(data);
   if (!result.success) {
     return { success: false, errors: result.error.flatten() };
   } else {
-    return { success: true };
+    const user = await db.user.findUnique({
+      where: {
+        email: result.data.email,
+      },
+      select: { id: true, password: true },
+    });
+    const ok = await bcrypt.compare(result.data.password, user!.password);
+
+    if (ok) {
+      const session = await getSession();
+      session.id = user!.id;
+      await session.save();
+      redirect('/user-profile');
+    } else {
+      return {
+        success: false,
+        errors: {
+          fieldErrors: {
+            email: [],
+            password: ['🚫 Wrong password!'],
+          },
+        },
+      };
+    }
   }
-  //
 };
-
-// zod 사용하기 전 코드
-// export const handleSubmitForm = async (prevStatus: any, data: FormData) => {
-//   await new Promise((res) => setTimeout(res, 1000));
-
-//   const validateField = (field: string | null, errorMessage: string) => {
-//     if (!field || field.trim() === '') {
-//       return `${errorMessage} is required`;
-//     }
-//     return null;
-//   };
-
-//   const email = data.get('email') as string | null;
-//   const userName = data.get('username') as string | null;
-//   const password = data.get('password') as string | null;
-
-//   const error: Record<string, string> = {
-//     ...(validateField(email, '❌ Email') && { email: '❌ Email is required' }),
-//     ...(validateField(userName, '❌ UserName') && { userName: '❌ UserName is required' }),
-//     ...(validateField(password, '❌ Password') && { password: '❌ Password is required' }),
-//     ...(password && password !== '12345' && { password: '❌ Wrong Password' }),
-//   };
-
-//   if (Object.keys(error).length > 0) {
-//     return { error };
-//   }
-
-//   return { success: true };
-// };

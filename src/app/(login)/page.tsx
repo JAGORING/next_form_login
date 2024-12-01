@@ -22,13 +22,6 @@ export default function Login() {
             errors={state?.errors?.fieldErrors.email}
           />
           <Input
-            name="username"
-            label="Username"
-            type="text"
-            placeholder="Enter your username"
-            errors={state?.errors?.fieldErrors.username}
-          />
-          <Input
             name="password"
             label="Password"
             type="password"
