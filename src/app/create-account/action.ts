@@ -8,42 +8,53 @@ import { getSession } from '@/lib/session';
 
 const hasLeastOneNum = (val: string) => /\d/.test(val);
 
-const checkUniqueEmail = async (email: string) => {
-  const user = await db.user.findUnique({
-    where: { email },
-    select: {
-      id: true,
-    },
-  });
-
-  return !user ? true : false;
-};
-
-const checkUniqueUserName = async (username: string) => {
-  const user = await db.user.findUnique({
-    where: { username },
-    select: {
-      id: true,
-    },
-  });
-
-  return !user ? true : false;
-};
 const createUserSchema = z
   .object({
-    email: z
-      .string()
-      .email()
-      .refine(checkUniqueEmail, '🚫 Looks like this email is already taken. Maybe try another one?'),
-    username: z
-      .string()
-      .min(MIN_LENGTH_USERNAME, '🚫 At least 5 characters.')
-      .refine(checkUniqueUserName, '🚫 Looks like this username is already taken. Maybe try another one?'),
+    email: z.string().email(),
+    username: z.string().min(MIN_LENGTH_USERNAME, '🚫 At least 5 characters.'),
     password: z
       .string()
       .min(MIN_LENGTH_PASSWORD, "🚫 At least 10 characters. Let's make it stronger!")
       .refine(hasLeastOneNum, '🚫 Must include at least one number.'),
     confirmPassword: z.string(),
+  })
+  .superRefine(async ({ username }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: 'custom',
+        message: '🚫 Looks like this username is already taken. Maybe try another one?',
+        path: ['username'],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  })
+  .superRefine(async ({ email }, ctx) => {
+    const user = await db.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      ctx.addIssue({
+        code: 'custom',
+        message: '🚫 Looks like this email is already taken. Maybe try another one?',
+        path: ['email'],
+        fatal: true,
+      });
+      return z.NEVER;
+    }
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '🚫 Passwords do not match.',
