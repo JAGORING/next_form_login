@@ -2,6 +2,10 @@
 import { MIN_LENGTH_PASSWORD, MIN_LENGTH_USERNAME } from '@/constants';
 import db from '@/lib/db';
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
+import { getIronSession } from 'iron-session';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const hasLeastOneNum = (val: string) => /\d/.test(val);
 
@@ -60,6 +64,24 @@ export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
   if (!result.success) {
     return { success: false, errors: result.error.flatten() };
   } else {
-    return { success: true };
+    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+
+    const user = await db.user.create({
+      data: {
+        email: result.data.email,
+        username: result.data.username,
+        password: hashedPassword,
+      },
+      select: { id: true },
+    });
+
+    const cookie = await getIronSession(cookies(), {
+      cookieName: 'user-info',
+      password: process.env.COOKIE_PASSWORD!,
+    });
+
+    cookie.id = user.id;
+    await cookie.save();
+    redirect('/user-profile');
   }
 };
