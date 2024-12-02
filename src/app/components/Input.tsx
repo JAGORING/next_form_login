@@ -18,7 +18,12 @@ const Input = ({ label, errors, name, ...props }: InputProps & InputHTMLAttribut
         name={name}
         className="w-full mt-1 px-4 py-2 bg-[#fdfcf9] border border-[#d3c9c3] rounded-lg focus:ring-2 focus:ring-[#9b8c85] focus:outline-none"
       />
-      {errors && errors.map((err) => <p className="mt-1 text-xs text-red-600">{err}</p>)}
+      {errors &&
+        errors.map((err, idx) => (
+          <p key={idx} className="mt-1 text-xs text-red-600">
+            {err}
+          </p>
+        ))}
     </div>
   );
 };

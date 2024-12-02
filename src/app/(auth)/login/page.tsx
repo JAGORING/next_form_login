@@ -1,9 +1,9 @@
 'use client';
 import { useFormState } from 'react-dom';
-import Input from '../components/Input';
-import FormButton from '../components/FormButton';
 import { handleSubmitForm } from './action';
 import Link from 'next/link';
+import Input from '@/app/components/Input';
+import FormButton from '@/app/components/FormButton';
 
 export default function Login() {
   const [state, action] = useFormState(handleSubmitForm, null);

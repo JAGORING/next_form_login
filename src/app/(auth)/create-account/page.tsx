@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
 import { useFormState } from 'react-dom';
-import Input from '../components/Input';
-import FormButton from '../components/FormButton';
 import { handleSubmitForm } from './action';
 import Link from 'next/link';
+import Input from '@/app/components/Input';
+import FormButton from '@/app/components/FormButton';
 
 export default function CreateAccount() {
   const [state, action] = useFormState(handleSubmitForm, null);
@@ -51,7 +51,7 @@ export default function CreateAccount() {
             <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
               🌿 Account created! Welcome aboard!
               <div className="mt-2 text-center">
-                <Link href="/" className="text-[#6b4f4f] text-sm hover:underline font-semibold">
+                <Link href="/login" className="text-[#6b4f4f] text-sm hover:underline font-semibold">
                   Go to Log in
                 </Link>
               </div>

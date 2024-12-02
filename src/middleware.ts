@@ -7,6 +7,7 @@ interface Routes {
 }
 const publicOnlyUrls: Routes = {
   '/': true,
+  '/login': true,
   '/create-account': true,
 };
 
@@ -26,5 +27,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/', '/profile', '/create-account'],
+  matcher: ['/', '/login', '/profile', '/create-account'],
 };
