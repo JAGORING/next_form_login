@@ -20,7 +20,7 @@ export const middleware = async (request: NextRequest) => {
     }
   } else {
     if (exists) {
-      return NextResponse.redirect(new URL('/user-profile', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 };
