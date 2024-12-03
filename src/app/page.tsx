@@ -1,40 +1,57 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+// 'use client';
+import db from '@/lib/db';
+import { formatDate } from '@/utils/date';
+import Link from 'next/link';
+// import React, { useState, useEffect } from 'react';
 
 interface Tweet {
   id: number;
-  username: string;
-  content: string;
-  timestamp: string;
+  title: string;
+  tweet: string;
+  created_at: string;
 }
 
-export default function Home() {
-  const [tweets, setTweets] = useState<Tweet[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+const getTweets = async () => {
+  const tweetData = await db.tweet.findMany({
+    select: {
+      title: true,
+      created_at: true,
+      tweet: true,
+      id: true,
+    },
+  });
+  return tweetData;
+  // await new Promise((res) => setTimeout(res, 1000));
+};
 
-  useEffect(() => {
-    fetchTweets(currentPage);
-  }, [currentPage]);
+export default async function Home() {
+  const tweetsData = await getTweets();
+  // const [tweets, setTweets] = useState<Tweet[]>([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
 
-  const fetchTweets = (page: number) => {
-    const mockTweets = Array.from({ length: 5 }, (_, i) => ({
-      id: i + 1 + (page - 1) * 5,
-      username: `user${i + 1}`,
-      content: `This is tweet #${i + 1 + (page - 1) * 5}`,
-      timestamp: new Date().toISOString(),
-    }));
-    setTweets(mockTweets);
-    setTotalPages(5);
-  };
+  // useEffect(() => {
+  //   fetchTweets(currentPage);
+  // }, [currentPage]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
+  // const fetchTweets = (page: number) => {
+  //   const mockTweets = Array.from({ length: 5 }, (_, i) => ({
+  //     id: i + 1 + (page - 1) * 5,
+  //     username: `user${i + 1}`,
+  //     content: `This is tweet #${i + 1 + (page - 1) * 5}`,
+  //     timestamp: new Date().toISOString(),
+  //   }));
+  //   setTweets(mockTweets);
+  //   setTotalPages(5);
+  // };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
+  // const handleNextPage = () => {
+  //   if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  // };
+
+  // const handlePreviousPage = () => {
+  //   if (currentPage > 1) setCurrentPage(currentPage - 1);
+  // };
 
   return (
     <div className="flex items-center justify-center min-h-screen py-10 px-6 md:px-0">
@@ -42,15 +59,19 @@ export default function Home() {
         <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweets Feed</h2>
 
         <div className="space-y-4">
-          {tweets.map((tweet) => (
-            <div key={tweet.id} className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
-              <p className="font-semibold text-[#6b4f4f]">@{tweet.username}</p>
-              <p className="text-sm text-[#8a6a6a]">{tweet.timestamp}</p>
-              <p className="mt-2 text-[#4a4a4a]">{tweet.content}</p>
-            </div>
+          {/* {tweets.map((tweet) => (
+           */}
+          {tweetsData.map((tweet) => (
+            <Link href={`/tweets/${tweet.id}`}>
+              <div key={tweet.id} className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
+                <p className="font-semibold text-[#6b4f4f]">@{tweet.title}</p>
+                <p className="text-sm text-[#8a6a6a]">{formatDate(tweet.created_at)}</p>
+                <p className="mt-2 text-[#4a4a4a]">{tweet.tweet}</p>
+              </div>
+            </Link>
           ))}
         </div>
-
+        {/* 
         <div className="flex justify-between items-center mt-6">
           <button
             onClick={handlePreviousPage}
@@ -78,8 +99,8 @@ export default function Home() {
             }`}
           >
             Next
-          </button>
-        </div>
+          </button> 
+     </div> */}
       </div>
     </div>
   );
