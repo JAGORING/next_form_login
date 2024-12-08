@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import LikeBtn from '../../components/LikeBtn';
 import { getSession } from '@/lib/session';
+import TweetComments from '../../components/TweetComments';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const tweet = await getTweetDetail(Number(params.id));
@@ -57,20 +58,48 @@ const getLikeStatus = async (tweetId: number, userId: number) => {
   };
 };
 
+const getCommentsByTweetId = async (tweetId: number) => {
+  try {
+    const comments = await db.comment.findMany({
+      where: {
+        tweetId: tweetId,
+      },
+      select: {
+        id: true,
+        comment: true,
+        created_at: true,
+        user: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+    return comments;
+  } catch (e) {
+    return [];
+  }
+};
+
 const getCachedTweet = nextCache(getTweetDetail, ['tweet-detail'], {
   tags: ['tweet-detail'],
   revalidate: 60,
 });
 
-const getCachedLikeStatus = async (postId: number) => {
+const getCachedLikeStatus = async (tweetId: number) => {
   const session = await getSession();
   const userId = session.id;
-  const cachedOperation = nextCache(getLikeStatus, ['product-like-status'], {
-    tags: [`like-status-${postId}`],
+  const cachedOperation = nextCache(getLikeStatus, ['tweet-like-status'], {
+    tags: [`like-status-${tweetId}`],
   });
-  return cachedOperation(postId, userId!);
+  return cachedOperation(tweetId, userId!);
 };
-
+const getCachedComments = async (tweetId: number) => {
+  const cachedOperation = nextCache(getCommentsByTweetId, ['tweet-comments'], {
+    tags: [`comment-${tweetId}`],
+  });
+  return cachedOperation(tweetId);
+};
 const TweetDetail = async ({ params }: { params: { id: number } }) => {
   const id = Number(params.id);
 
@@ -84,6 +113,8 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
   }
   if (!tweetDetail) return <p>Loading tweet details...</p>;
   const { likeCnt, isLiked } = await getCachedLikeStatus(id);
+  const comments = await getCachedComments(id);
+  getCachedComments;
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
@@ -100,19 +131,19 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
           <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
 
           <LikeBtn isLiked={isLiked} likeCnt={likeCnt} tweetId={id} />
-
-          <div className="mt-6">
+          <TweetComments comments={comments} tweetId={id} />
+          {/* <div className="mt-6">
             <h3 className="text-lg font-semibold text-[#6b4f4f] mb-4">Replies</h3>
             <ul className="space-y-4">
-              {/* {tweetDetail.replies.map((reply, index) => ( */}
-              <li key={1} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
-                <p className="text-sm text-[#6b4f4f] font-medium">
-                  {/* @{reply.user.username} */}
-                  {/* JAGORING <span className="text-xs text-[#8a6a6a]">{formatDate(reply.created_at)}</span> */}
-                </p>
-                {/* <p className="mt-2 text-[#4a4a4a]">{reply.content}</p> */}
-              </li>
-              {/* ))} */}
+              {tweetDetail.comments.map((comment, index) => (
+                <li key={comment.id} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
+                  <p className="text-sm text-[#6b4f4f] font-medium">
+                    @{comment.user.username}
+                    <span className="text-xs text-[#8a6a6a]"> {formatDate(comment.created_at)}</span>
+                  </p>
+                  <p className="mt-1 text-[#4a4a4a] text-sm">{comment.comment}</p>
+                </li>
+              ))}
             </ul>
 
             <form
@@ -136,7 +167,7 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

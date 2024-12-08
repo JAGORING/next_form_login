@@ -12,14 +12,6 @@ const LikeBtn = ({ isLiked, likeCnt, tweetId }: LikeBtnProps) => {
     isLiked: !previousState.isLiked,
     likeCnt: previousState.isLiked ? previousState.likeCnt - 1 : previousState.likeCnt + 1,
   }));
-  //   const onClick = async () => {
-  //     reducerFn(undefined);
-  //     if (isLiked) {
-  //       await postLike(tweetId);
-  //     } else {
-  //       await postDislike(tweetId);
-  //     }
-  //   };
 
   const onClick = async () => {
     const nextState = !state.isLiked;
