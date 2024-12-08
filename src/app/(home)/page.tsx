@@ -2,6 +2,10 @@ import db from '@/lib/db';
 import { Prisma } from '@prisma/client';
 import TweetList from './components/TweetList';
 
+export const metadata = {
+  title: 'Home',
+};
+
 const getInitTweets = async () => {
   const tweetData = await db.tweet.findMany({
     select: {

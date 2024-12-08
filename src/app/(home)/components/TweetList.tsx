@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import TweetBox from './TweetBox';
-import { fetchTweets, getTweetsCount } from '../apis/tweets';
 import { InitTweets } from '../page';
+import { fetchTweets, getTweetsCount } from '@/app/apis/tweets';
 
 const TweetList = ({ initTweetsData }: { initTweetsData: InitTweets }) => {
   const [tweets, setTweets] = useState(initTweetsData);

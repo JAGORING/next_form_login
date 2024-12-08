@@ -3,11 +3,9 @@ import { formatDate } from '@/utils/date';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-interface Tweet {
-  id: number;
-  title: string;
-  tweet: string;
-  created_at: string;
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const tweet = await getTweetDetail(Number(params.id));
+  return { title: tweet?.title };
 }
 
 const getTweetDetail = async (id: number) => {
