@@ -52,6 +52,54 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
           </p>
           <p className="text-sm text-[#8a6a6a]">{formatDate(tweetDetail.created_at)}</p>
           <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
+
+          <div className="mt-4 flex items-center space-x-2">
+            <button
+              className={`px-3 py-1 text-sm font-semibold rounded-lg ${
+                true ? 'bg-[#fdf0e4] text-[#e67a5f]' : 'bg-[#e2ddd7] text-[#6b4f4f]'
+              } hover:bg-[#e6d9d0] transition`}
+            >
+              {true ? '❤️ Liked' : '🤍 Like'}
+            </button>
+            <p className="text-sm text-[#6b4f4f]">0 likes</p>
+          </div>
+
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold text-[#6b4f4f] mb-4">Replies</h3>
+            <ul className="space-y-4">
+              {/* {tweetDetail.replies.map((reply, index) => ( */}
+              <li key={1} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
+                <p className="text-sm text-[#6b4f4f] font-medium">
+                  {/* @{reply.user.username} */}
+                  {/* JAGORING <span className="text-xs text-[#8a6a6a]">{formatDate(reply.created_at)}</span> */}
+                </p>
+                {/* <p className="mt-2 text-[#4a4a4a]">{reply.content}</p> */}
+              </li>
+              {/* ))} */}
+            </ul>
+
+            <form
+              // onSubmit={handleReplySubmit}
+              className="mt-4 space-y-3 bg-white p-4 border border-[#e2ddd7] rounded-lg shadow"
+            >
+              <textarea
+                name="reply"
+                placeholder="Write your reply..."
+                rows={2}
+                maxLength={100}
+                className="w-full px-3 py-1 border border-[#e2ddd7] rounded-lg text-[#4a4a4a] focus:outline-none focus:ring-2 focus:ring-[#6b4f4f] focus:border-transparent"
+              />
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-[#8a6a6a]">Max: 100 characters</p>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#6b4f4f] text-white rounded-lg font-semibold hover:bg-[#5a4040] focus:outline-none focus:ring-2 focus:ring-[#6b4f4f] focus:ring-offset-2"
+                >
+                  Reply
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
