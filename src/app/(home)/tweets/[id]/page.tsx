@@ -1,7 +1,10 @@
 import db from '@/lib/db';
+import { unstable_cache as nextCache } from 'next/cache';
 import { formatDate } from '@/utils/date';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import LikeBtn from '../../components/LikeBtn';
+import { getSession } from '@/lib/session';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const tweet = await getTweetDetail(Number(params.id));
@@ -9,19 +12,63 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
 }
 
 const getTweetDetail = async (id: number) => {
-  const tweetData = await db.tweet.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      user: {
-        select: {
-          username: true,
+  try {
+    const tweetData = await db.tweet.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
         },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
+    return tweetData;
+  } catch (e) {
+    return null;
+  }
+};
+
+const getLikeStatus = async (tweetId: number, userId: number) => {
+  const isLiked = await db.like.findUnique({
+    where: {
+      id: {
+        tweetId,
+        userId,
       },
     },
   });
-  return tweetData;
+  const likeCnt = await db.like.count({
+    where: {
+      tweetId,
+    },
+  });
+  return {
+    likeCnt,
+    isLiked: Boolean(isLiked),
+  };
+};
+
+const getCachedTweet = nextCache(getTweetDetail, ['tweet-detail'], {
+  tags: ['tweet-detail'],
+  revalidate: 60,
+});
+
+const getCachedLikeStatus = async (postId: number) => {
+  const session = await getSession();
+  const userId = session.id;
+  const cachedOperation = nextCache(getLikeStatus, ['product-like-status'], {
+    tags: [`like-status-${postId}`],
+  });
+  return cachedOperation(postId, userId!);
 };
 
 const TweetDetail = async ({ params }: { params: { id: number } }) => {
@@ -31,13 +78,12 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
     return notFound();
   }
 
-  const tweetDetail = await getTweetDetail(id);
+  const tweetDetail = await getCachedTweet(id);
   if (!tweetDetail) {
     return notFound();
   }
-
   if (!tweetDetail) return <p>Loading tweet details...</p>;
-
+  const { likeCnt, isLiked } = await getCachedLikeStatus(id);
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
@@ -53,16 +99,7 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
           <p className="text-sm text-[#8a6a6a]">{formatDate(tweetDetail.created_at)}</p>
           <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
 
-          <div className="mt-4 flex items-center space-x-2">
-            <button
-              className={`px-3 py-1 text-sm font-semibold rounded-lg ${
-                true ? 'bg-[#fdf0e4] text-[#e67a5f]' : 'bg-[#e2ddd7] text-[#6b4f4f]'
-              } hover:bg-[#e6d9d0] transition`}
-            >
-              {true ? '❤️ Liked' : '🤍 Like'}
-            </button>
-            <p className="text-sm text-[#6b4f4f]">0 likes</p>
-          </div>
+          <LikeBtn isLiked={isLiked} likeCnt={likeCnt} tweetId={id} />
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold text-[#6b4f4f] mb-4">Replies</h3>
