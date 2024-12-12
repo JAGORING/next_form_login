@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from './lib/session';
-import { redirect } from 'next/navigation';
 
 interface Routes {
   [key: string]: boolean;
