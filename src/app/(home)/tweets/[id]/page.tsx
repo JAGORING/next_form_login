@@ -127,7 +127,7 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
       <div className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
         <p className="font-semibold text-[#6b4f4f]">
           {tweetDetail.title}
-          <Link href={`/${tweetDetail.user.id}/my-tweets`}>
+          <Link href={`/${tweetDetail.user.id}/user-tweets`}>
             <span className="ml-1 font-medium text-[#6b4f4f] text-xs">
               @{tweetDetail.user.username}
             </span>

@@ -38,7 +38,7 @@ const TweetComments = ({ comments, tweetId }: any) => {
         {state.map((comment: any) => (
           <li key={comment.id} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
             <div>
-              <Link href={`/${comment.user.id}/my-tweets`}>
+              <Link href={`/${comment.user.id}/user-tweets`}>
                 <span className="text-sm text-[#6b4f4f] font-medium">@{comment.user.username}</span>
               </Link>
               <span className="text-xs text-[#8a6a6a]"> {formatDate(comment.created_at)}</span>

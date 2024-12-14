@@ -23,7 +23,7 @@ const getUserData = async (id: number) => {
   }
 };
 
-const MyTweetPage = async ({ params }: { params: { userId: number } }) => {
+const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
   const _userId = Number(params.userId);
 
   if (isNaN(_userId)) {
@@ -72,23 +72,4 @@ const MyTweetPage = async ({ params }: { params: { userId: number } }) => {
   );
 };
 
-export default MyTweetPage;
-
-const user = {
-  name: 'HARIN',
-  username: 'JAGORING',
-  avatarUrl: '',
-};
-
-const tweets = [
-  {
-    id: 1,
-    title: 'First Tweet',
-    content: 'This is the content of the first tweet.',
-  },
-  {
-    id: 2,
-    title: 'Second Tweet',
-    content: 'Another example of a tweet.',
-  },
-];
+export default UserTweetPage;
