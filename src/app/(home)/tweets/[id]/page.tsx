@@ -116,24 +116,22 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
   const comments = await getCachedComments(id);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
-        <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
-          ← Back to Tweets
-        </Link>
+    <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
+      <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
+        ← Back to Tweets
+      </Link>
 
-        <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweet Detail</h2>
-        <div className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
-          <p className="font-semibold text-[#6b4f4f]">
-            {tweetDetail.title}{' '}
-            <span className="font-medium text-[#6b4f4f] text-xs">@{tweetDetail.user.username}</span>
-          </p>
-          <p className="text-sm text-[#8a6a6a]">{formatDate(tweetDetail.created_at)}</p>
-          <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
+      <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweet Detail</h2>
+      <div className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
+        <p className="font-semibold text-[#6b4f4f]">
+          {tweetDetail.title}{' '}
+          <span className="font-medium text-[#6b4f4f] text-xs">@{tweetDetail.user.username}</span>
+        </p>
+        <p className="text-sm text-[#8a6a6a]">{formatDate(tweetDetail.created_at)}</p>
+        <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
 
-          <LikeBtn isLiked={isLiked} likeCnt={likeCnt} tweetId={id} />
-          <TweetComments comments={comments} tweetId={id} />
-        </div>
+        <LikeBtn isLiked={isLiked} likeCnt={likeCnt} tweetId={id} />
+        <TweetComments comments={comments} tweetId={id} />
       </div>
     </div>
   );

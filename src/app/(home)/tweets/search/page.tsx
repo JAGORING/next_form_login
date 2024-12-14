@@ -22,16 +22,14 @@ const Search = ({
   const query = searchParams?.query || '';
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen ">
-      <div className="w-full max-w-2xl p-6 bg-white shadow-xl rounded-2xl border border-[#e2ddd7] max-h-[750px] overflow-y-auto [&::-webkit-scrollbar]:hidden">
-        <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
-          ← Back to Tweets
-        </Link>
+    <div className="w-full max-w-2xl p-6 bg-white shadow-xl rounded-2xl border border-[#e2ddd7] max-h-[750px] overflow-y-auto [&::-webkit-scrollbar]:hidden">
+      <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
+        ← Back to Tweets
+      </Link>
 
-        <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🔍 Search Tweets</h2>
-        <SearchInput />
-        <SearchList query={query} />
-      </div>
+      <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🔍 Search Tweets</h2>
+      <SearchInput />
+      <SearchList query={query} />
     </div>
   );
 };
