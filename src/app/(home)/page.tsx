@@ -3,6 +3,8 @@ import { Prisma } from '@prisma/client';
 import TweetList from './components/TweetList';
 import Link from 'next/link';
 import UserMenu from './components/UserMenu';
+import { getSession } from '@/lib/session';
+import { notFound } from 'next/navigation';
 
 export const metadata = {
   title: 'Home',
@@ -28,6 +30,8 @@ export type InitTweets = Prisma.PromiseReturnType<typeof getInitTweets>;
 
 export default async function Home() {
   const initTweetsData = await getInitTweets();
+  const session = await getSession();
+  if (!session.id) return notFound();
   return (
     <div className="w-full min-w-[550px] max-w-3xl p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
       <div className="flex items-center justify-between">
@@ -37,7 +41,7 @@ export default async function Home() {
             🔍
           </Link>
         </div>
-        <UserMenu />
+        <UserMenu userId={session.id} />
       </div>
       <div className="w-full flex justify-end my-3">
         <Link href="/tweets/add-tweet">
