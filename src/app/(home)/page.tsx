@@ -29,7 +29,7 @@ export type InitTweets = Prisma.PromiseReturnType<typeof getInitTweets>;
 export default async function Home() {
   const initTweetsData = await getInitTweets();
   return (
-    <div className="w-full min-w-[550px] max-w-3xl p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7] h-[750px]">
+    <div className="w-full min-w-[550px] max-w-3xl p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-semibold text-[#6b4f4f]">🐦 All Tweets</h1>
@@ -37,16 +37,16 @@ export default async function Home() {
             🔍
           </Link>
         </div>
-
         <UserMenu />
       </div>
-      <div className="float-end">
+      <div className="w-full flex justify-end my-3">
         <Link href="/tweets/add-tweet">
-          <span className="bg-[#6b4f4f] text-sm text-white py-2 px-4 rounded-lg  hover:bg-[#5a4040] transition">
+          <span className="text-center text-sm font-semibold text-[#7d5e5e] rounded-lg hover:text-[#634545] transition">
             ➕ Add a Tweet
           </span>
         </Link>
       </div>
+
       <TweetList initTweetsData={initTweetsData} />
     </div>
   );

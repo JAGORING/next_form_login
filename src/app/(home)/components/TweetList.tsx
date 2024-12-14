@@ -45,13 +45,13 @@ const TweetList = ({ initTweetsData }: { initTweetsData: InitTweets }) => {
   }
   return (
     <>
-      <div className="h-full relative">
+      <div className="h-[640px] flex flex-col justify-between">
         <div className="space-y-4">
           {tweets.map((tweet) => (
             <TweetBox tweet={tweet} key={tweet.id} />
           ))}
         </div>
-        <div className="flex justify-between items-center absolute w-full bottom-10">
+        <div className="flex justify-between items-center">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1 || isLoading}
