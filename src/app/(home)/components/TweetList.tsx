@@ -45,39 +45,41 @@ const TweetList = ({ initTweetsData }: { initTweetsData: InitTweets }) => {
   }
   return (
     <>
-      <div className="space-y-4">
-        {tweets.map((tweet) => (
-          <TweetBox tweet={tweet} key={tweet.id} />
-        ))}
-      </div>
-      <div className="flex justify-between items-center mt-6">
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1 || isLoading}
-          className={`px-4 py-2 rounded-lg ${
-            currentPage === 1
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-[#6b4f4f] text-white hover:bg-[#8a6a6a]'
-          }`}
-        >
-          Previous
-        </button>
+      <div className="h-full relative">
+        <div className="space-y-4">
+          {tweets.map((tweet) => (
+            <TweetBox tweet={tweet} key={tweet.id} />
+          ))}
+        </div>
+        <div className="flex justify-between items-center absolute w-full bottom-10">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1 || isLoading}
+            className={`px-4 py-2 rounded-lg ${
+              currentPage === 1
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-[#6b4f4f] text-white hover:bg-[#8a6a6a]'
+            }`}
+          >
+            Previous
+          </button>
 
-        <span className="text-[#6b4f4f]">
-          Page {currentPage} of {totalPages}
-        </span>
+          <span className="text-[#6b4f4f]">
+            Page {currentPage} of {totalPages}
+          </span>
 
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages || isLoading}
-          className={`px-4 py-2 rounded-lg ${
-            currentPage === totalPages
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-[#6b4f4f] text-white hover:bg-[#8a6a6a]'
-          }`}
-        >
-          Next
-        </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages || isLoading}
+            className={`px-4 py-2 rounded-lg ${
+              currentPage === totalPages
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-[#6b4f4f] text-white hover:bg-[#8a6a6a]'
+            }`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );
