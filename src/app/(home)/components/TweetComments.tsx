@@ -2,6 +2,7 @@
 import { useOptimistic, useState } from 'react';
 import { formatDate } from '@/utils/date';
 import { createTweetComment } from '../tweets/[id]/action';
+import Link from 'next/link';
 
 const TweetComments = ({ comments, tweetId }: any) => {
   const [formState, setFormState] = useState({ comment: '' });
@@ -17,7 +18,7 @@ const TweetComments = ({ comments, tweetId }: any) => {
       id: Math.random(),
       comment: formState.comment,
       created_at: new Date(),
-      user: { username: 'current_user' },
+      user: { id: null, username: 'current_user' },
     };
 
     addCommentOptimistically(newComment);
@@ -25,7 +26,6 @@ const TweetComments = ({ comments, tweetId }: any) => {
     try {
       await createTweetComment(newComment.comment, tweetId);
     } catch (error: any) {
-      console.error('Error posting comment:', error);
       addCommentOptimistically((currentComments: any) =>
         currentComments.filter((comment: any) => comment.id !== newComment.id),
       );
@@ -37,10 +37,12 @@ const TweetComments = ({ comments, tweetId }: any) => {
       <ul className="space-y-4">
         {state.map((comment: any) => (
           <li key={comment.id} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
-            <p className="text-sm text-[#6b4f4f] font-medium">
-              @{comment.user.username}
+            <div>
+              <Link href={`/${comment.user.id}/my-tweets`}>
+                <span className="text-sm text-[#6b4f4f] font-medium">@{comment.user.username}</span>
+              </Link>
               <span className="text-xs text-[#8a6a6a]"> {formatDate(comment.created_at)}</span>
-            </p>
+            </div>
             <p className="mt-1 text-[#4a4a4a] text-sm">{comment.comment}</p>
           </li>
         ))}

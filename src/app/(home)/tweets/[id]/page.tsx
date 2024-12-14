@@ -21,6 +21,7 @@ const getTweetDetail = async (id: number) => {
       include: {
         user: {
           select: {
+            id: true,
             username: true,
           },
         },
@@ -70,6 +71,7 @@ const getCommentsByTweetId = async (tweetId: number) => {
         created_at: true,
         user: {
           select: {
+            id: true,
             username: true,
           },
         },
@@ -124,8 +126,12 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
       <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweet Detail</h2>
       <div className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
         <p className="font-semibold text-[#6b4f4f]">
-          {tweetDetail.title}{' '}
-          <span className="font-medium text-[#6b4f4f] text-xs">@{tweetDetail.user.username}</span>
+          {tweetDetail.title}
+          <Link href={`/${tweetDetail.user.id}/my-tweets`}>
+            <span className="ml-1 font-medium text-[#6b4f4f] text-xs">
+              @{tweetDetail.user.username}
+            </span>
+          </Link>
         </p>
         <p className="text-sm text-[#8a6a6a]">{formatDate(tweetDetail.created_at)}</p>
         <p className="mt-4 text-[#4a4a4a]">{tweetDetail.tweet}</p>
