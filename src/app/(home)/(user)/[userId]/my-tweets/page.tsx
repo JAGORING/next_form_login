@@ -9,7 +9,11 @@ const getUserData = async (id: number) => {
         id,
       },
       include: {
-        tweets: true,
+        tweets: {
+          orderBy: {
+            created_at: 'asc',
+          },
+        },
       },
     });
 
