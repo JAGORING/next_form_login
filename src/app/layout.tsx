@@ -16,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`max-w-screen-sm mx-auto bg-gradient-to-b from-[#f3e8d9] to-[#dcd3c7]`}>{children}</body>
+      <body className={`max-w-screen-sm mx-auto bg-gradient-to-b from-[#f3e8d9] to-[#dcd3c7]`}>
+        {children}
+      </body>
     </html>
   );
 }

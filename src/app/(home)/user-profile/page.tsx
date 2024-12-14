@@ -40,7 +40,8 @@ export default async function UserProfile() {
           </div>
           {user?.created_at && (
             <div className="text-[#6b4f4f]">
-              <strong>Joined Date:</strong> <span className="ml-2">{formatDate(user?.created_at)}</span>
+              <strong>Joined Date:</strong>{' '}
+              <span className="ml-2">{formatDate(user?.created_at)}</span>
             </div>
           )}
         </div>

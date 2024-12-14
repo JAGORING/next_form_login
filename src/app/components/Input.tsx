@@ -6,7 +6,12 @@ interface InputProps {
   errors?: string[];
 }
 
-const Input = ({ label, errors, name, ...props }: InputProps & InputHTMLAttributes<HTMLInputElement>) => {
+const Input = ({
+  label,
+  errors,
+  name,
+  ...props
+}: InputProps & InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <div>
       <label htmlFor={name} className="block text-sm font-medium text-[#8a6a6a]">

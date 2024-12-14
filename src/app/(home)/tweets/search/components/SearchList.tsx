@@ -9,7 +9,8 @@ const SearchList = async ({ query }: { query: string }) => {
     <div className="flex flex-col gap-2">
       {tweetsData.length > 0 ? (
         tweetsData.map((tweet) => {
-          const truncatedTweet = tweet.tweet.length > 100 ? `${tweet.tweet.slice(0, 100)}...` : tweet.tweet;
+          const truncatedTweet =
+            tweet.tweet.length > 100 ? `${tweet.tweet.slice(0, 100)}...` : tweet.tweet;
           return (
             <Link href={`/tweets/${tweet.id}`} key={tweet.id}>
               <div className="p-4 bg-[#fdfcf9] shadow rounded-lg border border-[#e2ddd7] hover:bg-[#fbf7f3] transition">

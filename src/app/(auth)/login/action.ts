@@ -23,7 +23,10 @@ const loginUserSchema = z.object({
   email: z
     .string()
     .email()
-    .refine(checkEmailExist, '🚫 This email is not registered. Please check your email or sign up.'),
+    .refine(
+      checkEmailExist,
+      '🚫 This email is not registered. Please check your email or sign up.',
+    ),
   password: z
     .string()
     .min(MIN_LENGTH_PASSWORD, '🚫 At least 10 characters.')

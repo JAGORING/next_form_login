@@ -8,10 +8,10 @@ const TweetComments = ({ comments, tweetId }: any) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormState({ ...formState, [event.target.name]: event.target.value });
   };
-  const [state, addCommentOptimistically] = useOptimistic(comments, (currentComments, newComment) => [
-    ...currentComments,
-    newComment,
-  ]);
+  const [state, addCommentOptimistically] = useOptimistic(
+    comments,
+    (currentComments, newComment) => [...currentComments, newComment],
+  );
   const handleCommentClick = async () => {
     const newComment = {
       id: Math.random(),
@@ -27,7 +27,7 @@ const TweetComments = ({ comments, tweetId }: any) => {
     } catch (error: any) {
       console.error('Error posting comment:', error);
       addCommentOptimistically((currentComments: any) =>
-        currentComments.filter((comment: any) => comment.id !== newComment.id)
+        currentComments.filter((comment: any) => comment.id !== newComment.id),
       );
     }
   };
