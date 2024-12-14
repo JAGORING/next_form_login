@@ -53,7 +53,7 @@ const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
         </div>
       </div>
 
-      <div className="space-y-4 max-h-[500px] overflow-y-auto [&::-webkit-scrollbar]:hidden">
+      <div className="space-y-4 h-[550px] overflow-y-auto [&::-webkit-scrollbar]:hidden">
         {user.tweets.length > 0 ? (
           user.tweets.map((tweet) => (
             <div
