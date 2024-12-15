@@ -28,6 +28,7 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.development.local
 
 # vercel
 .vercel
@@ -39,3 +40,4 @@ next-env.d.ts
 # database
 *.db
 *.db-journal
+.vercel
