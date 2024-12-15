@@ -8,7 +8,7 @@ const UserMenu = ({ userId }: { userId: number }) => {
   return (
     <div className="relative">
       <img
-        src="/user-avatar.jpg"
+        src="/images/default-user.png"
         alt="User Avatar"
         className="w-10 h-10 rounded-full cursor-pointer hover:shadow-lg"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}

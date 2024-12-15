@@ -25,13 +25,10 @@ const getUserData = async (id: number) => {
 
 const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
   const _userId = Number(params.userId);
-
-  if (isNaN(_userId)) {
+  const user = await getUserData(_userId);
+  if (isNaN(_userId) || !user) {
     return notFound();
   }
-
-  const user = await getUserData(_userId);
-  if (!user) notFound();
   return (
     <div className="w-full max-w-2xl p-6 bg-white shadow-xl rounded-2xl border border-[#e2ddd7]">
       <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
@@ -41,14 +38,17 @@ const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
       <div className="mb-6">
         <div className="flex items-center space-x-4 border-b border-[#e2ddd7] pb-4">
           <img
-            //   src={user.avatarUrl}
-            src={''}
+            //   src={user.avatarUrl ? user.avatarUrl : '/path/to/default-avatar.png'} 추후 이미지 등록 및 편집도 추가 예정
+            src="/images/default-user.png"
             alt={`${user.username} avatar`}
             className="w-16 h-16 rounded-full shadow"
           />
           <div>
             <h2 className="text-xl font-semibold text-[#6b4f4f]">{user.email}</h2>
             <p className="text-sm text-[#8a6a6a]">@{user.username}</p>
+            <p className="text-sm text-[#4a4a4a] mt-2">
+              {user.bio ? user.bio : 'This user hasn’t added a bio yet.'}
+            </p>
           </div>
         </div>
       </div>
