@@ -35,6 +35,8 @@ const getTweetDetail = async (id: number) => {
     });
     return tweetData;
   } catch (e) {
+    console.log('Get Error : ', e);
+
     return null;
   }
 };
@@ -79,6 +81,8 @@ const getCommentsByTweetId = async (tweetId: number) => {
     });
     return comments;
   } catch (e) {
+    console.log('Get Error : ', e);
+
     return [];
   }
 };

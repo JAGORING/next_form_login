@@ -20,6 +20,8 @@ const getUserData = async (id: number) => {
 
     return userData;
   } catch (e) {
+    console.log('Get Error : ', e);
+
     return null;
   }
 };

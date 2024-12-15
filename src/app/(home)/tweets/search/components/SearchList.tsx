@@ -22,7 +22,7 @@ const SearchList = async ({ query }: { query: string }) => {
           );
         })
       ) : (
-        <p className="text-sm text-[#8a6a6a]">No tweets found for "{query}".</p>
+        <p className="text-sm text-[#8a6a6a]">No tweets found for &quot;{query}&quot;.</p>
       )}
     </div>
   );

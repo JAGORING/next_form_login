@@ -14,7 +14,7 @@ const addTweetSchema = z.object({
     .max(MAX_TWEET_LENGTH, `🚫 Maximum ${MAX_TWEET_LENGTH} characters allowed.`),
 });
 
-export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
+export const handleSubmitForm = async (formData: FormData) => {
   await new Promise((res) => setTimeout(res, 1000));
   const data = {
     title: formData.get('title'),

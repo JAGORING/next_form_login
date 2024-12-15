@@ -1,4 +1,5 @@
 import db from '@/lib/db';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -19,6 +20,8 @@ const getUserData = async (id: number) => {
 
     return userData;
   } catch (e) {
+    console.log('get Error : ', e);
+
     return null;
   }
 };
@@ -37,10 +40,12 @@ const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
 
       <div className="mb-6">
         <div className="flex items-center space-x-4 border-b border-[#e2ddd7] pb-4">
-          <img
+          <Image
             //   src={user.avatarUrl ? user.avatarUrl : '/path/to/default-avatar.png'} 추후 이미지 등록 및 편집도 추가 예정
             src="/images/default-user.png"
             alt={`${user.username} avatar`}
+            width={16}
+            height={16}
             className="w-16 h-16 rounded-full shadow"
           />
           <div>

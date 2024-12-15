@@ -44,7 +44,7 @@ const updateUserSchema = z
     }
   });
 
-export const updateUserProfile = async (prevStatus: any, formData: FormData) => {
+export const updateUserProfile = async (formData: FormData) => {
   const data = {
     username: formData.get('username') || '',
     email: formData.get('email') || '',
@@ -66,7 +66,7 @@ export const updateUserProfile = async (prevStatus: any, formData: FormData) => 
     return redirect('/');
   }
 
-  const updatedData: any = {
+  const updatedData: { username: string; email: string; bio: string | null; password?: string } = {
     username: result.data.username || user.username,
     email: result.data.email || user.email,
     bio: result.data.bio || user.bio,

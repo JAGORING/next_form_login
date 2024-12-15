@@ -31,11 +31,12 @@ export default function Login() {
       </form>
       {state?.success && (
         <div className="mt-5 text-center text-sm text-green-600 bg-green-100 p-3 rounded-lg">
-          🌿 You’re in. Time to relax and enjoy!
+          🌿 You&apos;re in. Time to relax and enjoy!
         </div>
       )}
       <div className="mt-6 text-center">
-        <p className="text-sm text-[#8a6a6a]">Don't have an account?</p>
+        <p className="text-sm text-[#8a6a6a]">Don&apos;t have an account?</p>
+        <p className="text-sm text-[#8a6a6a]">Don&apos;t have an account?</p>
         <Link
           href="/create-account"
           className="text-[#6b4f4f] text-sm hover:underline font-semibold"

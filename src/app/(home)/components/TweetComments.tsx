@@ -26,6 +26,8 @@ const TweetComments = ({ comments, tweetId }: any) => {
     try {
       await createTweetComment(newComment.comment, tweetId);
     } catch (error: any) {
+      console.log('get Error : ', error);
+
       addCommentOptimistically((currentComments: any) =>
         currentComments.filter((comment: any) => comment.id !== newComment.id),
       );

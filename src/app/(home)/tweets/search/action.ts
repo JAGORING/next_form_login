@@ -25,6 +25,7 @@ export const getTweetsByKeyword = async (keyword: string) => {
     });
     return tweets;
   } catch (e) {
+    console.log('get Error : ', e);
     return [];
   }
 };

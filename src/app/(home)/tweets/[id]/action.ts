@@ -15,7 +15,9 @@ export const postLike = async (tweetId: number) => {
       },
     });
     revalidateTag(`like-status-${tweetId}`);
-  } catch (e) {}
+  } catch (e) {
+    console.log('Get Error : ', e);
+  }
 };
 
 export const postDislike = async (tweetId: number) => {
@@ -30,7 +32,9 @@ export const postDislike = async (tweetId: number) => {
       },
     });
     revalidateTag(`like-status-${tweetId}`);
-  } catch (e) {}
+  } catch (e) {
+    console.log('Get Error : ', e);
+  }
 };
 
 const createCommentSchema = z.object({
