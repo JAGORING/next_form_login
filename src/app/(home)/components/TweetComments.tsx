@@ -25,7 +25,7 @@ const TweetComments = ({ comments, tweetId }: { comments: any; tweetId: number }
       id: Math.random(),
       comment: formState.comment,
       created_at: new Date(),
-      user: { id: null, username: 'current_user' },
+      user: { id: null, username: '' },
     };
 
     addCommentOptimistically(newComment);

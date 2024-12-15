@@ -79,6 +79,7 @@ const getCommentsByTweetId = async (tweetId: number) => {
         },
       },
     });
+
     return comments;
   } catch (e) {
     console.log('Get Error : ', e);
