@@ -44,7 +44,7 @@ const updateUserSchema = z
     }
   });
 
-export const updateUserProfile = async (prevStatus: any, formData: FormData) => {
+export const updateUserProfile = async (prevStatus: unknown, formData: FormData) => {
   console.log(prevStatus);
   const data = {
     username: formData.get('username') || '',

@@ -33,7 +33,7 @@ const loginUserSchema = z.object({
     .refine(hasLeastOneNum, '🚫 Must include at least one number.'),
 });
 
-export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
+export const handleSubmitForm = async (prevStatus: unknown, formData: FormData) => {
   console.log(prevStatus);
   await new Promise((res) => setTimeout(res, 1000));
   const data = {

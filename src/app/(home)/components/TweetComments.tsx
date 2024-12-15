@@ -10,7 +10,8 @@ interface CommentType {
   created_at: Date;
   user: { id: number; username: string };
 }
-const TweetComments = ({ comments, tweetId }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const TweetComments = ({ comments, tweetId }: { comments: any; tweetId: number }) => {
   const [formState, setFormState] = useState({ comment: '' });
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormState({ ...formState, [event.target.name]: event.target.value });
@@ -35,7 +36,7 @@ const TweetComments = ({ comments, tweetId }: any) => {
       console.log('get Error : ', error);
 
       addCommentOptimistically((currentComments: CommentType[]) =>
-        currentComments.filter((comment: any) => comment.id !== newComment.id),
+        currentComments.filter((comment: CommentType) => comment.id !== newComment.id),
       );
     }
   };
@@ -43,7 +44,7 @@ const TweetComments = ({ comments, tweetId }: any) => {
     <div className="mt-6">
       <h3 className="text-lg font-semibold text-[#6b4f4f] mb-4">Replies</h3>
       <ul className="space-y-4">
-        {state.map((comment: any) => (
+        {state.map((comment: CommentType) => (
           <li key={comment.id} className="p-3 bg-white border border-[#e2ddd7] rounded-lg shadow">
             <div>
               <Link href={`/${comment.user.id}/user-tweets`}>
