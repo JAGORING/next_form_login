@@ -5,7 +5,6 @@ import Link from 'next/link';
 import UserMenu from './components/UserMenu';
 import { getSession } from '@/lib/session';
 import { notFound } from 'next/navigation';
-import LogoutButton from '../components/LogoutButton';
 
 export const metadata = {
   title: 'Home',
@@ -46,7 +45,6 @@ export default async function Home() {
           </Link>
         </div>
         <div className="flex items-center space-x-3">
-          <LogoutButton />
           <UserMenu userId={session.id} />
         </div>
       </div>

@@ -70,3 +70,9 @@ export const handleSubmitForm = async (prevStatus: unknown, formData: FormData) 
     }
   }
 };
+
+export const handleLogout = async () => {
+  const session = await getSession();
+  await session.destroy();
+  redirect('/');
+};

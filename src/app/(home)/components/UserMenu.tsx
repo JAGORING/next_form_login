@@ -1,10 +1,19 @@
 'use client';
+import { handleLogout } from '@/app/(auth)/login/action';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
 const UserMenu = ({ userId }: { userId: number }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const onLogout = async () => {
+    try {
+      await handleLogout();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="relative">
@@ -30,6 +39,12 @@ const UserMenu = ({ userId }: { userId: number }) => {
           >
             🏠 My Page
           </Link>
+          <button
+            onClick={onLogout}
+            className="w-full py-1 mt-2 text-sm bg-[#6b4f4f] text-white rounded-md hover:bg-[#593d3d] transition"
+          >
+            Log Out
+          </button>
         </div>
       )}
     </div>
