@@ -91,6 +91,6 @@ export const handleSubmitForm = async (prevStatus: unknown, formData: FormData) 
 
     session.id = user.id;
     await session.save();
-    redirect('/user-profile');
+    redirect('/');
   }
 };

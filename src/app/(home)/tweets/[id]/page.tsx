@@ -127,7 +127,7 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
         ← Back to Home
       </Link>
 
-      <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweet Detail</h2>
+      <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐻 Tweet Detail</h2>
       <div className="p-4 bg-white shadow rounded-lg border border-[#e2ddd7]">
         <p className="font-semibold text-[#6b4f4f]">
           {tweetDetail.title}

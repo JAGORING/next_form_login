@@ -36,7 +36,6 @@ export default function Login() {
       )}
       <div className="mt-6 text-center">
         <p className="text-sm text-[#8a6a6a]">Don&apos;t have an account?</p>
-        <p className="text-sm text-[#8a6a6a]">Don&apos;t have an account?</p>
         <Link
           href="/create-account"
           className="text-[#6b4f4f] text-sm hover:underline font-semibold"

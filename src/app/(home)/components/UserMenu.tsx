@@ -1,4 +1,5 @@
 'use client';
+import LogoutButton from '@/app/components/LogoutButton';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -30,6 +31,7 @@ const UserMenu = ({ userId }: { userId: number }) => {
           >
             🏠 My Page
           </Link>
+          <LogoutButton />
         </div>
       )}
     </div>
