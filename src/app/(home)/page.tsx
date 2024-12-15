@@ -36,9 +36,12 @@ export default async function Home() {
     <div className="w-full min-w-[550px] max-w-3xl p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-2xl font-semibold text-[#6b4f4f]">🐦 All Tweets</h1>
-          <Link href="/tweets/search" className="text-[#6b4f4f] hover:text-[#5a4040] transition">
-            🔍
+          <h1 className="text-2xl font-semibold text-[#6b4f4f]">🧸 All Tweets</h1>
+          <Link
+            href="/tweets/search"
+            className="text-[#6b4f4f] text-xs hover:text-[#5a4040] transition"
+          >
+            SEARCH
           </Link>
         </div>
         <UserMenu userId={session.id} />

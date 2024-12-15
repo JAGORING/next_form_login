@@ -5,6 +5,7 @@ import { handleSubmitForm } from './action';
 import { MAX_TWEET_LENGTH, MAX_TITLE_LENGTH } from '@/constants';
 import { useState } from 'react';
 import FormButton from '@/app/components/FormButton';
+import Link from 'next/link';
 
 const AddTweet = () => {
   const [title, setTitle] = useState('');
@@ -12,11 +13,11 @@ const AddTweet = () => {
   const [state, action] = useFormState(handleSubmitForm, null);
   return (
     <div className="w-full max-w-md p-6 bg-white shadow-xl rounded-2xl border border-[#e2ddd7]">
+      <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
+        ← Back to Home
+      </Link>
       <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">Add a New Tweet</h2>
       <form action={action} className="space-y-5">
-        <div>
-          <span className="block text-[#6b4f4f] font-medium mb-2">Username</span>
-        </div>
         <div>
           <label htmlFor="title" className="block text-[#6b4f4f] font-medium mb-2">
             Title

@@ -33,7 +33,7 @@ const MyPage = async ({ params }: { params: { userId: number } }) => {
   return (
     <div className="w-full max-w-xl p-6 bg-white shadow-xl rounded-2xl border border-[#e2ddd7]">
       <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
-        ← Back to My Page
+        ← Back to Home
       </Link>
 
       <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">📝 Edit Profile</h2>

@@ -120,7 +120,7 @@ const TweetDetail = async ({ params }: { params: { id: number } }) => {
   return (
     <div className="w-full max-w-md p-6 bg-[#fdfcf9] shadow-xl rounded-2xl border border-[#e2ddd7]">
       <Link href="/" className="text-[#6b4f4f] text-sm mb-4 block hover:underline">
-        ← Back to Tweets
+        ← Back to Home
       </Link>
 
       <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">🐦 Tweet Detail</h2>
