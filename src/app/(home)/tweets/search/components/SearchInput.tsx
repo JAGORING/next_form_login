@@ -1,7 +1,7 @@
 'use client';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-const SearchInput = async () => {
+const SearchInput = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

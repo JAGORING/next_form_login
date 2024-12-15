@@ -16,6 +16,8 @@ const TweetList = ({ initTweetsData }: { initTweetsData: InitTweets }) => {
         const tweetsCnt = await getTweetsCount();
         setTotalPages(Math.ceil(tweetsCnt / 4));
       } catch (error) {
+        console.log('Get Error : ', error);
+
         setTotalPages(1);
       }
     };

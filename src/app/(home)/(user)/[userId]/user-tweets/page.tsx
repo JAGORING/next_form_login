@@ -44,9 +44,9 @@ const UserTweetPage = async ({ params }: { params: { userId: number } }) => {
             //   src={user.avatarUrl ? user.avatarUrl : '/path/to/default-avatar.png'} 추후 이미지 등록 및 편집도 추가 예정
             src="/images/default-user.png"
             alt={`${user.username} avatar`}
-            width={16}
-            height={16}
-            className="w-16 h-16 rounded-full shadow"
+            width={64}
+            height={64}
+            className="rounded-full shadow"
           />
           <div>
             <h2 className="text-xl font-semibold text-[#6b4f4f]">{user.email}</h2>

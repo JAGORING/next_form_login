@@ -61,7 +61,9 @@ const createUserSchema = z
     path: ['confirmPassword'],
   });
 
-export const handleSubmitForm = async (formData: FormData) => {
+export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
+  console.log(prevStatus);
+
   await new Promise((res) => setTimeout(res, 1000));
   const data = {
     email: formData.get('email'),

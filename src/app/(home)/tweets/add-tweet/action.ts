@@ -14,7 +14,8 @@ const addTweetSchema = z.object({
     .max(MAX_TWEET_LENGTH, `🚫 Maximum ${MAX_TWEET_LENGTH} characters allowed.`),
 });
 
-export const handleSubmitForm = async (formData: FormData) => {
+export const handleSubmitForm = async (prevStatus: any, formData: FormData) => {
+  console.log(prevStatus);
   await new Promise((res) => setTimeout(res, 1000));
   const data = {
     title: formData.get('title'),
@@ -40,6 +41,5 @@ export const handleSubmitForm = async (formData: FormData) => {
       });
       redirect('/');
     }
-    return { success: false, errors: 'No Session!' };
   }
 };

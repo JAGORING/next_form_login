@@ -44,7 +44,8 @@ const updateUserSchema = z
     }
   });
 
-export const updateUserProfile = async (formData: FormData) => {
+export const updateUserProfile = async (prevStatus: any, formData: FormData) => {
+  console.log(prevStatus);
   const data = {
     username: formData.get('username') || '',
     email: formData.get('email') || '',

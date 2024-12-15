@@ -6,6 +6,7 @@ import { MAX_TWEET_LENGTH, MAX_TITLE_LENGTH } from '@/constants';
 import { useState } from 'react';
 import FormButton from '@/app/components/FormButton';
 import Link from 'next/link';
+import Input from '@/app/components/Input';
 
 const AddTweet = () => {
   const [title, setTitle] = useState('');
@@ -17,24 +18,20 @@ const AddTweet = () => {
         ← Back to Home
       </Link>
       <h2 className="text-2xl font-semibold text-center text-[#6b4f4f] mb-6">Add a New Tweet</h2>
-      <form action={action} className="space-y-5">
-        <div>
-          <label htmlFor="title" className="block text-[#6b4f4f] font-medium mb-2">
-            Title
-          </label>
-          <input
-            name="title"
-            type="text"
-            placeholder="Enter the title"
-            onChange={(e) => setTitle(e.target.value)}
-            maxLength={MAX_TITLE_LENGTH}
-            required
-            className="w-full px-4 py-2 border border-[#e2ddd7] rounded-lg text-[#4a4a4a] focus:outline-none focus:ring-2 focus:ring-[#6b4f4f] focus:border-transparent"
-          />
-          <p className="text-sm text-right text-[#8a6a6a] mt-1">
-            {title.length || 0} / {MAX_TITLE_LENGTH}
-          </p>
-        </div>
+      <form action={action} className="space-y-2">
+        <Input
+          name="title"
+          label="Title"
+          placeholder="Enter the title"
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={MAX_TITLE_LENGTH}
+          required
+          errors={state?.errors?.fieldErrors.title}
+        />
+        <p className="text-sm text-right text-[#8a6a6a] mt-1">
+          {title.length || 0} / {MAX_TITLE_LENGTH}
+        </p>
+
         <div>
           <label htmlFor="tweet" className="block text-[#6b4f4f] font-medium mb-2">
             Tweet

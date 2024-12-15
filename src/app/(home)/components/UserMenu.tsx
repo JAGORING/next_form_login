@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -7,10 +8,12 @@ const UserMenu = ({ userId }: { userId: number }) => {
 
   return (
     <div className="relative">
-      <img
+      <Image
         src="/images/default-user.png"
         alt="User Avatar"
-        className="w-10 h-10 rounded-full cursor-pointer hover:shadow-lg"
+        width={40}
+        height={40}
+        className="rounded-full cursor-pointer hover:shadow-lg"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       />
       {isDropdownOpen && (

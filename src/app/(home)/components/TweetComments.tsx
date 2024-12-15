@@ -4,6 +4,12 @@ import { formatDate } from '@/utils/date';
 import { createTweetComment } from '../tweets/[id]/action';
 import Link from 'next/link';
 
+interface CommentType {
+  id: number;
+  comment: string;
+  created_at: Date;
+  user: { id: number; username: string };
+}
 const TweetComments = ({ comments, tweetId }: any) => {
   const [formState, setFormState] = useState({ comment: '' });
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -25,10 +31,10 @@ const TweetComments = ({ comments, tweetId }: any) => {
 
     try {
       await createTweetComment(newComment.comment, tweetId);
-    } catch (error: any) {
+    } catch (error) {
       console.log('get Error : ', error);
 
-      addCommentOptimistically((currentComments: any) =>
+      addCommentOptimistically((currentComments: CommentType[]) =>
         currentComments.filter((comment: any) => comment.id !== newComment.id),
       );
     }
